@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Richard A. Bevers</title>
+    <description>Web Developer from Somewhere</description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Terrible blogger</title>
+        <description>&lt;p&gt;Several times before I started a blog and in each of those instances I stopped
+after only a few posts. Whenever my interests changed or I got too busy in my
+personal live. &lt;/p&gt;
+
+&lt;p&gt;This time I hope to break that cycle. Partly by doing things differently. Not
+using an elaborate blogging tool like Wordpress. Instead something much simpler
+and for some much harder. By using Jekyll and Github.&lt;/p&gt;
+
+&lt;p&gt;I have used Github before but Jekyll is a first. So lets see how long I keep it
+up this time. Also I&amp;#39;m not limiting myself as to what I post on here so who
+knows what you might find.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 13 Aug 2015 00:00:00 +0200</pubDate>
+        <link>/terrible-blogger/</link>
+        <guid isPermaLink="true">/terrible-blogger/</guid>
+      </item>
+    
+  </channel>
+</rss>
