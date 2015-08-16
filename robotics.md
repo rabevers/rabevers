@@ -9,7 +9,7 @@ In the past 15 years I have started up the project several times only having
 to quit a while later because of limited time and money.
 
 I started out using a Jackrabbit somewhere in 1998. Followed by a PIC
-microcontroller in 2005. Then I found out about MSP430ś from Texas Instruments.
+microcontroller in 2005. Then I found out about MSP430's from Texas Instruments.
 They had a launchpad to easily start developing with them.
 
 With the development software they offered, in combination with the launchpad,
