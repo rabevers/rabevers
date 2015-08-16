@@ -9,7 +9,8 @@ of interests:
 
 * Web development (duh)
 * Mobile robotics (Someday I hope to build a hexapod)
+* Photography (Today's photography is somewhat limited to my two kids)
 * Tv/Movies (I tend to watch a lot)
-* Eve Online
+* Eve Online (Internet spaceships)
 
 Some of these you might read about here.
