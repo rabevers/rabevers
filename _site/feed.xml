@@ -7,6 +7,54 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Servo controller</title>
+        <description>&lt;p&gt;There are several types of servos that can be used as actuators for a mobile robot. Analog servos being the most common and cheapest. Next are digital servos. They are
+more expensive, work the same way as analog servos but have several advantages with regards to torque and reaction time. The most expensive, but probably the best for
+robot applications are the &lt;a href=&quot;http://en.robotis.com/index/&quot;&gt;Dynamixel smart servo motors&lt;/a&gt;. They are also by far the most expensive and hardly realistic for a hobby robot
+builder.&lt;/p&gt;
+
+&lt;p&gt;The servo controller I intend to build will therefor be working with analog servos since they are more widely available, accepted and cheaper.&lt;/p&gt;
+
+&lt;h1&gt;Control theory&lt;/h1&gt;
+
+&lt;p&gt;The theory behind controlling an analog servo is relatively easy. They respond to a 50hz pwm signal. That means a signal must be repeated every 20ms. The length
+of the pulse within the 20ms determine the position the servo will attempt to reach. If the servo is already at that position it will remain there.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/servo-pwm.png&quot; alt=&quot;Servo pwm diagram&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Period (P) will occur 50 times in one second. The amplitude in our case will be the voltage level in the MSP430’s I intend to use. Which is 3.3V. The duty cycle
+is the important part in this story since it determines the position of the servo.&lt;/p&gt;
+
+&lt;p&gt;Some reading has shown me that the center servo position is often reached by setting a 1.5 ms duty cycle. Once at that position the duty cycle must remain
+the same in order to keep it at that position.&lt;/p&gt;
+
+&lt;p&gt;Setting a smaller duty cycle the servo will turn left to the corresponding position, setting a larger duty cycle will turn the servo right to the corresponding
+position.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Please keep in mind that the center or neutral position does not always correspond to 1.5ms pulses, this seems to be related to the degrees of motion a particular
+servo has. In order to find the center position one would have to calibrate the servo controller for a servo.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This theory controls a single servo. If we wish to control more than one servo (which we do) we will need to do this for each one. Since the pulse train is
+continuous a single micro controller could fill up all of its time controlling just the single servo.&lt;/p&gt;
+
+&lt;p&gt;This means we have to get creative with how we make the micro controller spend its time. As much as I would like to take credit for all this information I have
+to admit most of it comes from other sources.&lt;/p&gt;
+
+&lt;p&gt;The people over at &lt;a href=&quot;https://www.pololu.com/&quot;&gt;Pololu&lt;/a&gt; wrote an excellent series of blog posts about servo control. starting with
+&lt;a href=&quot;https://www.pololu.com/blog/15/servo-servo-motor-servomotor-definitely-not-server&quot;&gt;Servo, servo motor, servomotor (definitely not server)&lt;/a&gt;.
+Another Important source is &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l&amp;#39;Hexapod&lt;/a&gt;. A blog by Len Holgate on his own endeavor to create a hexapod robot.&lt;/p&gt;
+
+&lt;p&gt;Both sources are several years old 2011 and 2010 respectively but still valid today. Both seem to have chosen a different way of accomplishing
+the control of multiple servos with a single micro controller.&lt;/p&gt;
+
+&lt;p&gt;I was some time ago that I read the Pololu series. I will read their solution again and determine what my solution will be. That is for a next post.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 29 Aug 2015 00:00:00 +0200</pubDate>
+        <link>/servo-control-part-1/</link>
+        <guid isPermaLink="true">/servo-control-part-1/</guid>
+      </item>
+    
+      <item>
         <title>Terrible blogger</title>
         <description>&lt;p&gt;Several times before I started a blog and in each of those instances I stopped
 after only a few posts. Whenever my interests changed or I got too busy in my

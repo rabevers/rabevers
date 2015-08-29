@@ -317,6 +317,11 @@ footer {
   text-align: center;
 }
 
+.center-image {
+  margin: 0 auto;
+  display: block;
+}
+
 .highlight {
   background-color: #efefef;
   padding: 7px 7px 7px 10px;
