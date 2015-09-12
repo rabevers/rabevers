@@ -7,7 +7,52 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Servo controller</title>
+        <title>Servo controller part 2 - Theory</title>
+        <description>&lt;p&gt;After reading posts on &lt;a href=&quot;https://www.pololu.com/blog&quot;&gt;Pololu&lt;/a&gt; and &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l&amp;#39;Hexapod&lt;/a&gt; I decided the control theory of &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l&amp;#39;Hexapod&lt;/a&gt;
+seems like a better fit. He seems to have a greater control over the servo timing and pulse train. I&amp;#39;m assuming this control comes at a price, a more complex implementation.&lt;/p&gt;
+
+&lt;p&gt;For starters the, the amount of control I would like can only be achieved by ussing Assembly rather than C. Assembly allows me to create smaller and faster code. There is just one problem.
+The last time I actually did something with Assembly is over 20 years ago and even then it was just the basics.&lt;/p&gt;
+
+&lt;h2&gt;The Theory&lt;/h2&gt;
+
+&lt;p&gt;The PWM period is 20ms. The max duty cycle however seems to be between &lt;em&gt;2.1&lt;/em&gt; and &lt;em&gt;2.5ms&lt;/em&gt;. That means that for at least 17.5ms the controller would do nothing. So we can break up the 20ms
+period in smaller chunks. 2.5ms each would mean we could control&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;20 / 2.5 = 8&lt;/em&gt; servos.&lt;/p&gt;
+
+&lt;p&gt;Add Multiplexers to the hardware and we could get up to 64. With my assembly programming skills however I don really think this is feasible... at least not yet.&lt;/p&gt;
+
+&lt;p&gt;Lets paint a picture.&lt;/p&gt;
+
+&lt;p&gt;In the previous post. I showed this.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/servo-pwm.png&quot; alt=&quot;Servo pwm diagram&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;The PWM pulse train used to control servos. This image however shows nothing about timing, so here is another one.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/single-pulse.png&quot; alt=&quot;Servo PWM with timing&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;The image shows the diagram of a single 20ms cycle. All pulses start at the beginning of the cycle. I stated before that the pulse width determines the position of the servo.
+Exactly what pulse length correlates to which position seems to differ between servo types. In general though the left extreme position is no less than 0.5ms while the right
+extreme position is no more thatn 2.5ms. Please keep in mind that this is just from what I read at various sites on-line.&lt;/p&gt;
+
+&lt;p&gt;Anyway, looking at the diagram, one can&amp;#39;t help but notice the huge amount of idle time there is between 2.5ms and 20ms. This is where the breaking up comes in to play. Assuming
+the max pwm duty cycle is 2.5ms breaking it up in blocks of 2.5 will leave very little time to do anything else. so I decided to break the cycle up into four parts.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/quad-pulse.png&quot; alt=&quot;Servo PWM in blocks&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;This way we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a hexapod mobile robot.&lt;/p&gt;
+
+&lt;p&gt;So lets zoom in on the 5ms each of our cycles will be.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 12 Sep 2015 15:58:48 +0200</pubDate>
+        <link>/servo-controller-part-2-selected-theory/</link>
+        <guid isPermaLink="true">/servo-controller-part-2-selected-theory/</guid>
+      </item>
+    
+      <item>
+        <title>Servo controller part 1</title>
         <description>&lt;p&gt;There are several types of servos that can be used as actuators for a mobile robot. Analog servos being the most common and cheapest. Next are digital servos. They are
 more expensive, work the same way as analog servos but have several advantages with regards to torque and reaction time. The most expensive, but probably the best for
 robot applications are the &lt;a href=&quot;http://en.robotis.com/index/&quot;&gt;Dynamixel smart servo motors&lt;/a&gt;. They are also by far the most expensive and hardly realistic for a hobby robot

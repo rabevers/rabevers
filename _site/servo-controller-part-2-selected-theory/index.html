@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Servo controller part 2 - Theory – Richard A. Bevers – Web Developer from Somewhere</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="After reading posts on Pololu and l&#39;Hexapod I decided the control theory of l&#39;Hexapod
+seems like a better fit. He seems to have a greater control over the servo timing and pulse train. I&#39;m assuming this control comes at a price, a more complex implementation.
+" />
+    <meta property="og:description" content="After reading posts on Pololu and l&#39;Hexapod I decided the control theory of l&#39;Hexapod
+seems like a better fit. He seems to have a greater control over the servo timing and pulse train. I&#39;m assuming this control comes at a price, a more complex implementation.
+" />
+    
+    <meta name="author" content="Richard A. Bevers" />
+
+    
+    <meta property="og:title" content="Servo controller part 2 - Theory" />
+    <meta property="twitter:title" content="Servo controller part 2 - Theory" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Richard A. Bevers - Web Developer from Somewhere" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://raw.githubusercontent.com/barryclark/jekyll-now/master/images/jekyll-logo.png" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Richard A. Bevers</a></h1>
+            <p class="site-description">Web Developer from Somewhere</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/robotics">Robotics</a>
+            <a href="/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Servo controller part 2 - Theory</h1>
+
+  <div class="entry">
+    <p>After reading posts on <a href="https://www.pololu.com/blog">Pololu</a> and <a href="http://www.lhexapod.com/blog/">l&#39;Hexapod</a> I decided the control theory of <a href="http://www.lhexapod.com/blog/">l&#39;Hexapod</a>
+seems like a better fit. He seems to have a greater control over the servo timing and pulse train. I&#39;m assuming this control comes at a price, a more complex implementation.</p>
+
+<p>For starters the, the amount of control I would like can only be achieved by ussing Assembly rather than C. Assembly allows me to create smaller and faster code. There is just one problem.
+The last time I actually did something with Assembly is over 20 years ago and even then it was just the basics.</p>
+
+<h2>The Theory</h2>
+
+<p>The PWM period is 20ms. The max duty cycle however seems to be between <em>2.1</em> and <em>2.5ms</em>. That means that for at least 17.5ms the controller would do nothing. So we can break up the 20ms
+period in smaller chunks. 2.5ms each would mean we could control</p>
+
+<p><em>20 / 2.5 = 8</em> servos.</p>
+
+<p>Add Multiplexers to the hardware and we could get up to 64. With my assembly programming skills however I don really think this is feasible... at least not yet.</p>
+
+<p>Lets paint a picture.</p>
+
+<p>In the previous post. I showed this.</p>
+
+<p><img src="/images/servo-pwm.png" alt="Servo pwm diagram"></p>
+
+<p>The PWM pulse train used to control servos. This image however shows nothing about timing, so here is another one.</p>
+
+<p><img src="/images/single-pulse.png" alt="Servo PWM with timing"></p>
+
+<p>The image shows the diagram of a single 20ms cycle. All pulses start at the beginning of the cycle. I stated before that the pulse width determines the position of the servo.
+Exactly what pulse length correlates to which position seems to differ between servo types. In general though the left extreme position is no less than 0.5ms while the right
+extreme position is no more thatn 2.5ms. Please keep in mind that this is just from what I read at various sites on-line.</p>
+
+<p>Anyway, looking at the diagram, one can&#39;t help but notice the huge amount of idle time there is between 2.5ms and 20ms. This is where the breaking up comes in to play. Assuming
+the max pwm duty cycle is 2.5ms breaking it up in blocks of 2.5 will leave very little time to do anything else. so I decided to break the cycle up into four parts.</p>
+
+<p><img src="/images/quad-pulse.png" alt="Servo PWM in blocks"></p>
+
+<p>This way we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a hexapod mobile robot.</p>
+
+<p>So lets zoom in on the 5ms each of our cycles will be.</p>
+
+  </div>
+
+  <div class="date">
+    Written on September 12, 2015
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'rabevers';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

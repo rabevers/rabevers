@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Servo controller
+title: Servo controller part 1
 ---
 
 There are several types of servos that can be used as actuators for a mobile robot. Analog servos being the most common and cheapest. Next are digital servos. They are

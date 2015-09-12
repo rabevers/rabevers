@@ -322,6 +322,13 @@ footer {
   display: block;
 }
 
+div.entry {
+  text-align: justify;
+}
+div.entry img {
+  margin: 20px 0;
+}
+
 .highlight {
   background-color: #efefef;
   padding: 7px 7px 7px 10px;
