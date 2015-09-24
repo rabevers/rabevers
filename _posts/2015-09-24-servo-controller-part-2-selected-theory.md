@@ -41,6 +41,28 @@ the max pwm duty cycle is 2.5ms breaking it up in blocks of 2.5 will leave very 
 
 ![Servo PWM in blocks](/images/quad-pulse.png)
 
-This way we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a hexapod mobile robot.
+This way we make better use of the idle time and we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a
+hexapod mobile robot. Each cycle is identical.
 
 So lets zoom in on the 5ms each of our cycles will be.
+
+![Servo PWM in blocks](/images/servo-pulses-zoom.png)
+
+This image shows three distinct "periods" in every 5ms cycle. The period where all pins are high, a period where pins can be switched back to low and a 2.5ms period where all pins are low.
+
+Of these three distinct periods the only one that can be constantly busy generating servo pulses is the yellow "Variable pulse length" period. It spans a maximum of 2ms. This leaves
+3ms for activities such as calculating the pulses, determining when each pulse should end and handle communication.
+
+Knowing when we have processing time available allows us to create a global sequence of events.
+
+* Start pulses for the group (set pins to high)
+* Handle communication
+* End pulses fors the group (set pins to low)
+* Handle communication
+* Calculate Ending times for next cycles pulses
+
+This of course is an overly simplified sequence of events. I have not yet figured out how it will look exactly.
+
+For now I'm reading up on assembly programming and checking out interrupts and timing. That should provide me with enough information to create a sequence in much greater detail.
+
+As always if you think something in here is wrong please let me know, thanks.

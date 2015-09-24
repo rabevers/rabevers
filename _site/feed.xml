@@ -42,11 +42,35 @@ the max pwm duty cycle is 2.5ms breaking it up in blocks of 2.5 will leave very 
 
 &lt;p&gt;&lt;img src=&quot;/images/quad-pulse.png&quot; alt=&quot;Servo PWM in blocks&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;This way we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a hexapod mobile robot.&lt;/p&gt;
+&lt;p&gt;This way we make better use of the idle time and we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a
+hexapod mobile robot. Each cycle is identical.&lt;/p&gt;
 
 &lt;p&gt;So lets zoom in on the 5ms each of our cycles will be.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/servo-pulses-zoom.png&quot; alt=&quot;Servo PWM in blocks&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;This image shows three distinct &amp;quot;periods&amp;quot; in every 5ms cycle. The period where all pins are high, a period where pins can be switched back to low and a 2.5ms period where all pins are low.&lt;/p&gt;
+
+&lt;p&gt;Of these three distinct periods the only one that can be constantly busy generating servo pulses is the yellow &amp;quot;Variable pulse length&amp;quot; period. It spans a maximum of 2ms. This leaves
+3ms for activities such as calculating the pulses, determining when each pulse should end and handle communication.&lt;/p&gt;
+
+&lt;p&gt;Knowing when we have processing time available allows us to create a global sequence of events.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Start pulses for the group (set pins to high)&lt;/li&gt;
+&lt;li&gt;Handle communication&lt;/li&gt;
+&lt;li&gt;End pulses fors the group (set pins to low)&lt;/li&gt;
+&lt;li&gt;Handle communication&lt;/li&gt;
+&lt;li&gt;Calculate Ending times for next cycles pulses&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This of course is an overly simplified sequence of events. I have not yet figured out how it will look exactly.&lt;/p&gt;
+
+&lt;p&gt;For now I&amp;#39;m reading up on assembly programming and checking out interrupts and timing. That should provide me with enough information to create a sequence in much greater detail.&lt;/p&gt;
+
+&lt;p&gt;As always if you think something in here is wrong please let me know, thanks.&lt;/p&gt;
 </description>
-        <pubDate>Sat, 12 Sep 2015 15:58:48 +0200</pubDate>
+        <pubDate>Thu, 24 Sep 2015 00:00:00 +0200</pubDate>
         <link>/servo-controller-part-2-selected-theory/</link>
         <guid isPermaLink="true">/servo-controller-part-2-selected-theory/</guid>
       </item>

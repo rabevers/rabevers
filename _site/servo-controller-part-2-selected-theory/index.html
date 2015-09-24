@@ -92,14 +92,38 @@ the max pwm duty cycle is 2.5ms breaking it up in blocks of 2.5 will leave very 
 
 <p><img src="/images/quad-pulse.png" alt="Servo PWM in blocks"></p>
 
-<p>This way we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a hexapod mobile robot.</p>
+<p>This way we make better use of the idle time and we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a
+hexapod mobile robot. Each cycle is identical.</p>
 
 <p>So lets zoom in on the 5ms each of our cycles will be.</p>
+
+<p><img src="/images/servo-pulses-zoom.png" alt="Servo PWM in blocks"></p>
+
+<p>This image shows three distinct &quot;periods&quot; in every 5ms cycle. The period where all pins are high, a period where pins can be switched back to low and a 2.5ms period where all pins are low.</p>
+
+<p>Of these three distinct periods the only one that can be constantly busy generating servo pulses is the yellow &quot;Variable pulse length&quot; period. It spans a maximum of 2ms. This leaves
+3ms for activities such as calculating the pulses, determining when each pulse should end and handle communication.</p>
+
+<p>Knowing when we have processing time available allows us to create a global sequence of events.</p>
+
+<ul>
+<li>Start pulses for the group (set pins to high)</li>
+<li>Handle communication</li>
+<li>End pulses fors the group (set pins to low)</li>
+<li>Handle communication</li>
+<li>Calculate Ending times for next cycles pulses</li>
+</ul>
+
+<p>This of course is an overly simplified sequence of events. I have not yet figured out how it will look exactly.</p>
+
+<p>For now I&#39;m reading up on assembly programming and checking out interrupts and timing. That should provide me with enough information to create a sequence in much greater detail.</p>
+
+<p>As always if you think something in here is wrong please let me know, thanks.</p>
 
   </div>
 
   <div class="date">
-    Written on September 12, 2015
+    Written on September 24, 2015
   </div>
 
   
@@ -144,6 +168,21 @@ the max pwm duty cycle is 2.5ms breaking it up in blocks of 2.5 will leave very 
     </div>
 
     
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-67518055-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/servo-controller-part-2-selected-theory/',
+		  'title': 'Servo controller part 2 - Theory'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
 
   </body>
 </html>
