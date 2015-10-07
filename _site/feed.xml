@@ -7,6 +7,36 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Servo controller update</title>
+        <description>&lt;p&gt;In my previous post I ended with me reading up on interrupts and timers. After
+doing said reading I came to the same conclusion I did a while ago. I&amp;#39;m severly
+lacking knowledge of actually program the msp430 in assembly.&lt;/p&gt;
+
+&lt;p&gt;So before I can actually make a better proposal for the sequence and timing I
+figure I need some more experience. It seems like a good idea to just start
+programming in assembly and see how everything works.&lt;/p&gt;
+
+&lt;p&gt;TI (of course) has several documents to help me get started&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ti.com/lit/ug/slau131j/slau131j.pdf&quot;&gt;MSP430 Assembly Language Tools User&amp;#39;s guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ti.com/lit/ug/slau144j/slau144j.pdf&quot;&gt;MSP430x2xx Family User&amp;#39;s guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ti.com/lit/ds/symlink/msp430g2553.pdf&quot;&gt;Datasheet MSP430G2x53&lt;/a&gt; (I plan on using an msp430g2553)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Other than that I have to search the Internet. I found there are many examples
+and explanations but most of them are written in C. There are some assembler
+tutorials but so far I have not found any that go a little deeper than just
+an introduction.&lt;/p&gt;
+
+&lt;p&gt;This will take longer than I thought.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 07 Oct 2015 00:00:00 +0200</pubDate>
+        <link>/servo-controller-update-1/</link>
+        <guid isPermaLink="true">/servo-controller-update-1/</guid>
+      </item>
+    
+      <item>
         <title>Servo controller part 2 - Theory</title>
         <description>&lt;p&gt;After reading posts on &lt;a href=&quot;https://www.pololu.com/blog&quot;&gt;Pololu&lt;/a&gt; and &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l&amp;#39;Hexapod&lt;/a&gt; I decided the control theory of &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l&amp;#39;Hexapod&lt;/a&gt;
 seems like a better fit. He seems to have a greater control over the servo timing and pulse train. I&amp;#39;m assuming this control comes at a price, a more complex implementation.&lt;/p&gt;
