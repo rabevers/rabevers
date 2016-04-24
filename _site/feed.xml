@@ -7,6 +7,23 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Still going</title>
+        <description>&lt;p&gt;In my first post I mentioned that I am a terrible blogger. Last year I started
+a new job which turned out to be quite challenging. That in combination with
+being a father and a few other projects that take precedence means I have very
+little time to actually spent on the controller.&lt;/p&gt;
+
+&lt;p&gt;The servo controller project however is still going, even though it is at a
+stand still at the moment.&lt;/p&gt;
+
+&lt;p&gt;Perhaps I should mention the other things I to. &lt;/p&gt;
+</description>
+        <pubDate>Sun, 24 Apr 2016 00:00:00 +0200</pubDate>
+        <link>/still-going/</link>
+        <guid isPermaLink="true">/still-going/</guid>
+      </item>
+    
+      <item>
         <title>Servo controller update</title>
         <description>&lt;p&gt;In my previous post I ended with me reading up on interrupts and timers. After
 doing said reading I came to the same conclusion I did a while ago. I&amp;#39;m severly
