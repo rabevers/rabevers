@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Starting up again... kind of – Richard A. Bevers – Web Developer from Somewhere</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="As you may have noticed. It has been a while since my last post. I have thought about starting up again many times sine then. Last week I actually did it.
+
+When I stopped I was still in the process of learning more assembly. Though I understand the concept of setting values in registers, more advanced concepts still elude me.
+
+One of those concepts is variables.
+
+in C I would just provide a type, a name, and default value like so.
+
+int pin3 = 3;
+
+
+In Assembly this is very different. I read about the various sections available and I came across the .bss and .data sections.
+
+Starting off with .bss which is defined as an unitialized section. Usually for uninitialized data. It is declared as follows.
+
+.bss name [,size in bytes]
+
+
+The idea now is that servo settings can be configured and stored to persistent flash memory in the .data segment.
+
+From there the initial settings can be loaded into the uninitialized .bss section for variable use.
+
+For each servo I plan to define a .bss section as follows.
+
+.bss	servo1,3
+
+
+In it I create a label servo1 and reserve 3 bytes of memory for it. Why 3, because initially I thought it could hold the desired position, the current position and the number of steps left to get to the desired position. If I ever get this working it will probably need some more bytes of data. The idea of steps cam from another blog, see l’Hexapod. It is an older and seemingly inactive blog, but it holds a lot of information and insights of a similar project.
+
+Next up… learning to work with the variables. I still need to figure out easy ways to address the other bytes in the defined space. The label seems to only point to the first one.
+" />
+    <meta property="og:description" content="As you may have noticed. It has been a while since my last post. I have thought about starting up again many times sine then. Last week I actually did it.
+
+When I stopped I was still in the process of learning more assembly. Though I understand the concept of setting values in registers, more advanced concepts still elude me.
+
+One of those concepts is variables.
+
+in C I would just provide a type, a name, and default value like so.
+
+int pin3 = 3;
+
+
+In Assembly this is very different. I read about the various sections available and I came across the .bss and .data sections.
+
+Starting off with .bss which is defined as an unitialized section. Usually for uninitialized data. It is declared as follows.
+
+.bss name [,size in bytes]
+
+
+The idea now is that servo settings can be configured and stored to persistent flash memory in the .data segment.
+
+From there the initial settings can be loaded into the uninitialized .bss section for variable use.
+
+For each servo I plan to define a .bss section as follows.
+
+.bss	servo1,3
+
+
+In it I create a label servo1 and reserve 3 bytes of memory for it. Why 3, because initially I thought it could hold the desired position, the current position and the number of steps left to get to the desired position. If I ever get this working it will probably need some more bytes of data. The idea of steps cam from another blog, see l’Hexapod. It is an older and seemingly inactive blog, but it holds a lot of information and insights of a similar project.
+
+Next up… learning to work with the variables. I still need to figure out easy ways to address the other bytes in the defined space. The label seems to only point to the first one.
+" />
+    
+    <meta name="author" content="Richard A. Bevers" />
+
+    
+    <meta property="og:title" content="Starting up again... kind of" />
+    <meta property="twitter:title" content="Starting up again... kind of" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Richard A. Bevers - Web Developer from Somewhere" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://raw.githubusercontent.com/barryclark/jekyll-now/master/images/jekyll-logo.png" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Richard A. Bevers</a></h1>
+            <p class="site-description">Web Developer from Somewhere</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/robotics">Robotics</a>
+            <a href="/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Starting up again... kind of</h1>
+
+  <div class="entry">
+    <p>As you may have noticed. It has been a while since my last post. I have thought about starting up again many times sine then. Last week I actually did it.</p>
+
+<p>When I stopped I was still in the process of learning more assembly. Though I understand the concept of setting values in registers, more advanced concepts still elude me.</p>
+
+<p>One of those concepts is variables.</p>
+
+<p>in C I would just provide a type, a name, and default value like so.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">pin3</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>In Assembly this is very different. I read about the various sections available and I came across the <code class="highlighter-rouge">.bss</code> and <code class="highlighter-rouge">.data</code> sections.</p>
+
+<p>Starting off with <code class="highlighter-rouge">.bss</code> which is defined as an unitialized section. Usually for uninitialized data. It is declared as follows.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.bss name [,size in bytes]
+</code></pre></div></div>
+
+<p>The idea now is that servo settings can be configured and stored to persistent flash memory in the <code class="highlighter-rouge">.data</code> segment.</p>
+
+<p>From there the initial settings can be loaded into the uninitialized <code class="highlighter-rouge">.bss</code> section for variable use.</p>
+
+<p>For each servo I plan to define a <code class="highlighter-rouge">.bss</code> section as follows.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.bss	servo1,3
+</code></pre></div></div>
+
+<p>In it I create a label <code class="highlighter-rouge">servo1</code> and reserve 3 bytes of memory for it. Why 3, because initially I thought it could hold the desired position, the current position and the number of steps left to get to the desired position. If I ever get this working it will probably need some more bytes of data. The idea of steps cam from another blog, see <a href="http://www.lhexapod.com/blog/2009/09/new-servo-controller-commands.html">l’Hexapod</a>. It is an older and seemingly inactive blog, but it holds a lot of information and insights of a similar project.</p>
+
+<p>Next up… learning to work with the variables. I still need to figure out easy ways to address the other bytes in the defined space. The label seems to only point to the first one.</p>
+
+  </div>
+
+  <div class="date">
+    Written on March 13, 2019
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'rabevers';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-67518055-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/starting-up-again-kind-of/',
+		  'title': 'Starting up again... kind of'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>

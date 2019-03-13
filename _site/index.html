@@ -51,6 +51,47 @@
   
     <article class="post">
 
+      <h1><a href="/starting-up-again-kind-of/">Starting up again... kind of</a></h1>
+
+      <div class="entry">
+        <p>As you may have noticed. It has been a while since my last post. I have thought about starting up again many times sine then. Last week I actually did it.</p>
+
+<p>When I stopped I was still in the process of learning more assembly. Though I understand the concept of setting values in registers, more advanced concepts still elude me.</p>
+
+<p>One of those concepts is variables.</p>
+
+<p>in C I would just provide a type, a name, and default value like so.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">pin3</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>In Assembly this is very different. I read about the various sections available and I came across the <code class="highlighter-rouge">.bss</code> and <code class="highlighter-rouge">.data</code> sections.</p>
+
+<p>Starting off with <code class="highlighter-rouge">.bss</code> which is defined as an unitialized section. Usually for uninitialized data. It is declared as follows.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.bss name [,size in bytes]
+</code></pre></div></div>
+
+<p>The idea now is that servo settings can be configured and stored to persistent flash memory in the <code class="highlighter-rouge">.data</code> segment.</p>
+
+<p>From there the initial settings can be loaded into the uninitialized <code class="highlighter-rouge">.bss</code> section for variable use.</p>
+
+<p>For each servo I plan to define a <code class="highlighter-rouge">.bss</code> section as follows.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.bss	servo1,3
+</code></pre></div></div>
+
+<p>In it I create a label <code class="highlighter-rouge">servo1</code> and reserve 3 bytes of memory for it. Why 3, because initially I thought it could hold the desired position, the current position and the number of steps left to get to the desired position. If I ever get this working it will probably need some more bytes of data. The idea of steps cam from another blog, see <a href="http://www.lhexapod.com/blog/2009/09/new-servo-controller-commands.html">l’Hexapod</a>. It is an older and seemingly inactive blog, but it holds a lot of information and insights of a similar project.</p>
+
+<p>Next up… learning to work with the variables. I still need to figure out easy ways to address the other bytes in the defined space. The label seems to only point to the first one.</p>
+
+      </div>
+
+      <a href="/starting-up-again-kind-of/" class="read-more">Read More</a>
+    </article>
+  
+    <article class="post">
+
       <h1><a href="/still-going/">Still going</a></h1>
 
       <div class="entry">
@@ -58,6 +99,11 @@
 a new job which turned out to be quite challenging. That in combination with
 being a father and a few other projects that take precedence means I have very
 little time to actually spent on the controller.</p>
+
+<p>The servo controller project however is still going, even though it is at a
+stand still at the moment.</p>
+
+<p>Perhaps I should mention the other things I to.</p>
 
       </div>
 
@@ -70,8 +116,27 @@ little time to actually spent on the controller.</p>
 
       <div class="entry">
         <p>In my previous post I ended with me reading up on interrupts and timers. After
-doing said reading I came to the same conclusion I did a while ago. I&#39;m severly
+doing said reading I came to the same conclusion I did a while ago. I’m severly
 lacking knowledge of actually program the msp430 in assembly.</p>
+
+<p>So before I can actually make a better proposal for the sequence and timing I
+figure I need some more experience. It seems like a good idea to just start
+programming in assembly and see how everything works.</p>
+
+<p>TI (of course) has several documents to help me get started</p>
+
+<ul>
+  <li><a href="http://www.ti.com/lit/ug/slau131j/slau131j.pdf">MSP430 Assembly Language Tools User’s guide</a></li>
+  <li><a href="http://www.ti.com/lit/ug/slau144j/slau144j.pdf">MSP430x2xx Family User’s guide</a></li>
+  <li><a href="http://www.ti.com/lit/ds/symlink/msp430g2553.pdf">Datasheet MSP430G2x53</a> (I plan on using an msp430g2553)</li>
+</ul>
+
+<p>Other than that I have to search the Internet. I found there are many examples
+and explanations but most of them are written in C. There are some assembler
+tutorials but so far I have not found any that go a little deeper than just
+an introduction.</p>
+
+<p>This will take longer than I thought.</p>
 
       </div>
 
@@ -83,8 +148,67 @@ lacking knowledge of actually program the msp430 in assembly.</p>
       <h1><a href="/servo-controller-part-2-selected-theory/">Servo controller part 2 - Theory</a></h1>
 
       <div class="entry">
-        <p>After reading posts on <a href="https://www.pololu.com/blog">Pololu</a> and <a href="http://www.lhexapod.com/blog/">l&#39;Hexapod</a> I decided the control theory of <a href="http://www.lhexapod.com/blog/">l&#39;Hexapod</a>
-seems like a better fit. He seems to have a greater control over the servo timing and pulse train. I&#39;m assuming this control comes at a price, a more complex implementation.</p>
+        <p>After reading posts on <a href="https://www.pololu.com/blog">Pololu</a> and <a href="http://www.lhexapod.com/blog/">l’Hexapod</a> I decided the control theory of <a href="http://www.lhexapod.com/blog/">l’Hexapod</a>
+seems like a better fit. He seems to have a greater control over the servo timing and pulse train. I’m assuming this control comes at a price, a more complex implementation.</p>
+
+<p>For starters the, the amount of control I would like can only be achieved by ussing Assembly rather than C. Assembly allows me to create smaller and faster code. There is just one problem.
+The last time I actually did something with Assembly is over 20 years ago and even then it was just the basics.</p>
+
+<h2 id="the-theory">The Theory</h2>
+
+<p>The PWM period is 20ms. The max duty cycle however seems to be between <em>2.1</em> and <em>2.5ms</em>. That means that for at least 17.5ms the controller would do nothing. So we can break up the 20ms
+period in smaller chunks. 2.5ms each would mean we could control</p>
+
+<p><em>20 / 2.5 = 8</em> servos.</p>
+
+<p>Add Multiplexers to the hardware and we could get up to 64. With my assembly programming skills however I don really think this is feasible… at least not yet.</p>
+
+<p>Lets paint a picture.</p>
+
+<p>In the previous post. I showed this.</p>
+
+<p><img src="/images/servo-pwm.png" alt="Servo pwm diagram" /></p>
+
+<p>The PWM pulse train used to control servos. This image however shows nothing about timing, so here is another one.</p>
+
+<p><img src="/images/single-pulse.png" alt="Servo PWM with timing" /></p>
+
+<p>The image shows the diagram of a single 20ms cycle. All pulses start at the beginning of the cycle. I stated before that the pulse width determines the position of the servo.
+Exactly what pulse length correlates to which position seems to differ between servo types. In general though the left extreme position is no less than 0.5ms while the right
+extreme position is no more thatn 2.5ms. Please keep in mind that this is just from what I read at various sites on-line.</p>
+
+<p>Anyway, looking at the diagram, one can’t help but notice the huge amount of idle time there is between 2.5ms and 20ms. This is where the breaking up comes in to play. Assuming
+the max pwm duty cycle is 2.5ms breaking it up in blocks of 2.5 will leave very little time to do anything else. so I decided to break the cycle up into four parts.</p>
+
+<p><img src="/images/quad-pulse.png" alt="Servo PWM in blocks" /></p>
+
+<p>This way we make better use of the idle time and we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a
+hexapod mobile robot. Each cycle is identical.</p>
+
+<p>So lets zoom in on the 5ms each of our cycles will be.</p>
+
+<p><img src="/images/servo-pulses-zoom.png" alt="Servo PWM in blocks" /></p>
+
+<p>This image shows three distinct “periods” in every 5ms cycle. The period where all pins are high, a period where pins can be switched back to low and a 2.5ms period where all pins are low.</p>
+
+<p>Of these three distinct periods the only one that can be constantly busy generating servo pulses is the yellow “Variable pulse length” period. It spans a maximum of 2ms. This leaves
+3ms for activities such as calculating the pulses, determining when each pulse should end and handle communication.</p>
+
+<p>Knowing when we have processing time available allows us to create a global sequence of events.</p>
+
+<ul>
+  <li>Start pulses for the group (set pins to high)</li>
+  <li>Handle communication</li>
+  <li>End pulses fors the group (set pins to low)</li>
+  <li>Handle communication</li>
+  <li>Calculate Ending times for next cycles pulses</li>
+</ul>
+
+<p>This of course is an overly simplified sequence of events. I have not yet figured out how it will look exactly.</p>
+
+<p>For now I’m reading up on assembly programming and checking out interrupts and timing. That should provide me with enough information to create a sequence in much greater detail.</p>
+
+<p>As always if you think something in here is wrong please let me know, thanks.</p>
 
       </div>
 
@@ -101,6 +225,42 @@ more expensive, work the same way as analog servos but have several advantages w
 robot applications are the <a href="http://en.robotis.com/index/">Dynamixel smart servo motors</a>. They are also by far the most expensive and hardly realistic for a hobby robot
 builder.</p>
 
+<p>The servo controller I intend to build will therefor be working with analog servos since they are more widely available, accepted and cheaper.</p>
+
+<h1 id="control-theory">Control theory</h1>
+
+<p>The theory behind controlling an analog servo is relatively easy. They respond to a 50hz pwm signal. That means a signal must be repeated every 20ms. The length
+of the pulse within the 20ms determine the position the servo will attempt to reach. If the servo is already at that position it will remain there.</p>
+
+<p><img src="/images/servo-pwm.png" alt="Servo pwm diagram" /></p>
+
+<p>Period (P) will occur 50 times in one second. The amplitude in our case will be the voltage level in the MSP430’s I intend to use. Which is 3.3V. The duty cycle
+is the important part in this story since it determines the position of the servo.</p>
+
+<p>Some reading has shown me that the center servo position is often reached by setting a 1.5 ms duty cycle. Once at that position the duty cycle must remain
+the same in order to keep it at that position.</p>
+
+<p>Setting a smaller duty cycle the servo will turn left to the corresponding position, setting a larger duty cycle will turn the servo right to the corresponding
+position.</p>
+
+<p><strong>Please keep in mind that the center or neutral position does not always correspond to 1.5ms pulses, this seems to be related to the degrees of motion a particular
+servo has. In order to find the center position one would have to calibrate the servo controller for a servo.</strong></p>
+
+<p>This theory controls a single servo. If we wish to control more than one servo (which we do) we will need to do this for each one. Since the pulse train is
+continuous a single micro controller could fill up all of its time controlling just the single servo.</p>
+
+<p>This means we have to get creative with how we make the micro controller spend its time. As much as I would like to take credit for all this information I have
+to admit most of it comes from other sources.</p>
+
+<p>The people over at <a href="https://www.pololu.com/">Pololu</a> wrote an excellent series of blog posts about servo control. starting with
+<a href="https://www.pololu.com/blog/15/servo-servo-motor-servomotor-definitely-not-server">Servo, servo motor, servomotor (definitely not server)</a>.
+Another Important source is <a href="http://www.lhexapod.com/blog/">l’Hexapod</a>. A blog by Len Holgate on his own endeavor to create a hexapod robot.</p>
+
+<p>Both sources are several years old 2011 and 2010 respectively but still valid today. Both seem to have chosen a different way of accomplishing
+the control of multiple servos with a single micro controller.</p>
+
+<p>I was some time ago that I read the Pololu series. I will read their solution again and determine what my solution will be. That is for a next post.</p>
+
       </div>
 
       <a href="/servo-control-part-1/" class="read-more">Read More</a>
@@ -113,7 +273,15 @@ builder.</p>
       <div class="entry">
         <p>Several times before I started a blog and in each of those instances I stopped
 after only a few posts. Whenever my interests changed or I got too busy in my
-personal live. </p>
+personal live.</p>
+
+<p>This time I hope to break that cycle. Partly by doing things differently. Not
+using an elaborate blogging tool like Wordpress. Instead something much simpler
+and for some much harder. By using Jekyll and Github.</p>
+
+<p>I have used Github before but Jekyll is a first. So lets see how long I keep it
+up this time. Also I’m not limiting myself as to what I post on here so who
+knows what you might find.</p>
 
       </div>
 
@@ -153,7 +321,7 @@ personal live. </p>
 
 		ga('create', 'UA-67518055-1', 'auto');
 		ga('send', 'pageview', {
-		  'page': '/index.html',
+		  'page': '/',
 		  'title': ''
 		});
 	</script>

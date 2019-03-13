@@ -3,8 +3,46 @@
   <channel>
     <title>Richard A. Bevers</title>
     <description>Web Developer from Somewhere</description>
-    <link></link>
-    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    <link>http://localhost:4000</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Starting up again... kind of</title>
+        <description>&lt;p&gt;As you may have noticed. It has been a while since my last post. I have thought about starting up again many times sine then. Last week I actually did it.&lt;/p&gt;
+
+&lt;p&gt;When I stopped I was still in the process of learning more assembly. Though I understand the concept of setting values in registers, more advanced concepts still elude me.&lt;/p&gt;
+
+&lt;p&gt;One of those concepts is variables.&lt;/p&gt;
+
+&lt;p&gt;in C I would just provide a type, a name, and default value like so.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pin3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In Assembly this is very different. I read about the various sections available and I came across the &lt;code class=&quot;highlighter-rouge&quot;&gt;.bss&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;.data&lt;/code&gt; sections.&lt;/p&gt;
+
+&lt;p&gt;Starting off with &lt;code class=&quot;highlighter-rouge&quot;&gt;.bss&lt;/code&gt; which is defined as an unitialized section. Usually for uninitialized data. It is declared as follows.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.bss name [,size in bytes]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The idea now is that servo settings can be configured and stored to persistent flash memory in the &lt;code class=&quot;highlighter-rouge&quot;&gt;.data&lt;/code&gt; segment.&lt;/p&gt;
+
+&lt;p&gt;From there the initial settings can be loaded into the uninitialized &lt;code class=&quot;highlighter-rouge&quot;&gt;.bss&lt;/code&gt; section for variable use.&lt;/p&gt;
+
+&lt;p&gt;For each servo I plan to define a &lt;code class=&quot;highlighter-rouge&quot;&gt;.bss&lt;/code&gt; section as follows.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.bss	servo1,3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In it I create a label &lt;code class=&quot;highlighter-rouge&quot;&gt;servo1&lt;/code&gt; and reserve 3 bytes of memory for it. Why 3, because initially I thought it could hold the desired position, the current position and the number of steps left to get to the desired position. If I ever get this working it will probably need some more bytes of data. The idea of steps cam from another blog, see &lt;a href=&quot;http://www.lhexapod.com/blog/2009/09/new-servo-controller-commands.html&quot;&gt;l’Hexapod&lt;/a&gt;. It is an older and seemingly inactive blog, but it holds a lot of information and insights of a similar project.&lt;/p&gt;
+
+&lt;p&gt;Next up… learning to work with the variables. I still need to figure out easy ways to address the other bytes in the defined space. The label seems to only point to the first one.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 13 Mar 2019 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/starting-up-again-kind-of/</link>
+        <guid isPermaLink="true">http://localhost:4000/starting-up-again-kind-of/</guid>
+      </item>
     
       <item>
         <title>Still going</title>
@@ -16,17 +54,17 @@ little time to actually spent on the controller.&lt;/p&gt;
 &lt;p&gt;The servo controller project however is still going, even though it is at a
 stand still at the moment.&lt;/p&gt;
 
-&lt;p&gt;Perhaps I should mention the other things I to. &lt;/p&gt;
+&lt;p&gt;Perhaps I should mention the other things I to.&lt;/p&gt;
 </description>
-        <pubDate>Sun, 24 Apr 2016 00:00:00 +0200</pubDate>
-        <link>/still-going/</link>
-        <guid isPermaLink="true">/still-going/</guid>
+        <pubDate>Sun, 24 Apr 2016 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/still-going/</link>
+        <guid isPermaLink="true">http://localhost:4000/still-going/</guid>
       </item>
     
       <item>
         <title>Servo controller update</title>
         <description>&lt;p&gt;In my previous post I ended with me reading up on interrupts and timers. After
-doing said reading I came to the same conclusion I did a while ago. I&amp;#39;m severly
+doing said reading I came to the same conclusion I did a while ago. I’m severly
 lacking knowledge of actually program the msp430 in assembly.&lt;/p&gt;
 
 &lt;p&gt;So before I can actually make a better proposal for the sequence and timing I
@@ -36,9 +74,9 @@ programming in assembly and see how everything works.&lt;/p&gt;
 &lt;p&gt;TI (of course) has several documents to help me get started&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ti.com/lit/ug/slau131j/slau131j.pdf&quot;&gt;MSP430 Assembly Language Tools User&amp;#39;s guide&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ti.com/lit/ug/slau144j/slau144j.pdf&quot;&gt;MSP430x2xx Family User&amp;#39;s guide&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ti.com/lit/ds/symlink/msp430g2553.pdf&quot;&gt;Datasheet MSP430G2x53&lt;/a&gt; (I plan on using an msp430g2553)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.ti.com/lit/ug/slau131j/slau131j.pdf&quot;&gt;MSP430 Assembly Language Tools User’s guide&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.ti.com/lit/ug/slau144j/slau144j.pdf&quot;&gt;MSP430x2xx Family User’s guide&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.ti.com/lit/ds/symlink/msp430g2553.pdf&quot;&gt;Datasheet MSP430G2x53&lt;/a&gt; (I plan on using an msp430g2553)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Other than that I have to search the Internet. I found there are many examples
@@ -48,78 +86,78 @@ an introduction.&lt;/p&gt;
 
 &lt;p&gt;This will take longer than I thought.&lt;/p&gt;
 </description>
-        <pubDate>Wed, 07 Oct 2015 00:00:00 +0200</pubDate>
-        <link>/servo-controller-update-1/</link>
-        <guid isPermaLink="true">/servo-controller-update-1/</guid>
+        <pubDate>Wed, 07 Oct 2015 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/servo-controller-update-1/</link>
+        <guid isPermaLink="true">http://localhost:4000/servo-controller-update-1/</guid>
       </item>
     
       <item>
         <title>Servo controller part 2 - Theory</title>
-        <description>&lt;p&gt;After reading posts on &lt;a href=&quot;https://www.pololu.com/blog&quot;&gt;Pololu&lt;/a&gt; and &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l&amp;#39;Hexapod&lt;/a&gt; I decided the control theory of &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l&amp;#39;Hexapod&lt;/a&gt;
-seems like a better fit. He seems to have a greater control over the servo timing and pulse train. I&amp;#39;m assuming this control comes at a price, a more complex implementation.&lt;/p&gt;
+        <description>&lt;p&gt;After reading posts on &lt;a href=&quot;https://www.pololu.com/blog&quot;&gt;Pololu&lt;/a&gt; and &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l’Hexapod&lt;/a&gt; I decided the control theory of &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l’Hexapod&lt;/a&gt;
+seems like a better fit. He seems to have a greater control over the servo timing and pulse train. I’m assuming this control comes at a price, a more complex implementation.&lt;/p&gt;
 
 &lt;p&gt;For starters the, the amount of control I would like can only be achieved by ussing Assembly rather than C. Assembly allows me to create smaller and faster code. There is just one problem.
 The last time I actually did something with Assembly is over 20 years ago and even then it was just the basics.&lt;/p&gt;
 
-&lt;h2&gt;The Theory&lt;/h2&gt;
+&lt;h2 id=&quot;the-theory&quot;&gt;The Theory&lt;/h2&gt;
 
 &lt;p&gt;The PWM period is 20ms. The max duty cycle however seems to be between &lt;em&gt;2.1&lt;/em&gt; and &lt;em&gt;2.5ms&lt;/em&gt;. That means that for at least 17.5ms the controller would do nothing. So we can break up the 20ms
 period in smaller chunks. 2.5ms each would mean we could control&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;20 / 2.5 = 8&lt;/em&gt; servos.&lt;/p&gt;
 
-&lt;p&gt;Add Multiplexers to the hardware and we could get up to 64. With my assembly programming skills however I don really think this is feasible... at least not yet.&lt;/p&gt;
+&lt;p&gt;Add Multiplexers to the hardware and we could get up to 64. With my assembly programming skills however I don really think this is feasible… at least not yet.&lt;/p&gt;
 
 &lt;p&gt;Lets paint a picture.&lt;/p&gt;
 
 &lt;p&gt;In the previous post. I showed this.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/servo-pwm.png&quot; alt=&quot;Servo pwm diagram&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/servo-pwm.png&quot; alt=&quot;Servo pwm diagram&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The PWM pulse train used to control servos. This image however shows nothing about timing, so here is another one.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/single-pulse.png&quot; alt=&quot;Servo PWM with timing&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/single-pulse.png&quot; alt=&quot;Servo PWM with timing&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The image shows the diagram of a single 20ms cycle. All pulses start at the beginning of the cycle. I stated before that the pulse width determines the position of the servo.
 Exactly what pulse length correlates to which position seems to differ between servo types. In general though the left extreme position is no less than 0.5ms while the right
 extreme position is no more thatn 2.5ms. Please keep in mind that this is just from what I read at various sites on-line.&lt;/p&gt;
 
-&lt;p&gt;Anyway, looking at the diagram, one can&amp;#39;t help but notice the huge amount of idle time there is between 2.5ms and 20ms. This is where the breaking up comes in to play. Assuming
+&lt;p&gt;Anyway, looking at the diagram, one can’t help but notice the huge amount of idle time there is between 2.5ms and 20ms. This is where the breaking up comes in to play. Assuming
 the max pwm duty cycle is 2.5ms breaking it up in blocks of 2.5 will leave very little time to do anything else. so I decided to break the cycle up into four parts.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/quad-pulse.png&quot; alt=&quot;Servo PWM in blocks&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/quad-pulse.png&quot; alt=&quot;Servo PWM in blocks&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This way we make better use of the idle time and we can generate four pulses each cycle, using multiplexers that adds up to 32 servos. That seems like enough to control a
 hexapod mobile robot. Each cycle is identical.&lt;/p&gt;
 
 &lt;p&gt;So lets zoom in on the 5ms each of our cycles will be.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/servo-pulses-zoom.png&quot; alt=&quot;Servo PWM in blocks&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/servo-pulses-zoom.png&quot; alt=&quot;Servo PWM in blocks&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;This image shows three distinct &amp;quot;periods&amp;quot; in every 5ms cycle. The period where all pins are high, a period where pins can be switched back to low and a 2.5ms period where all pins are low.&lt;/p&gt;
+&lt;p&gt;This image shows three distinct “periods” in every 5ms cycle. The period where all pins are high, a period where pins can be switched back to low and a 2.5ms period where all pins are low.&lt;/p&gt;
 
-&lt;p&gt;Of these three distinct periods the only one that can be constantly busy generating servo pulses is the yellow &amp;quot;Variable pulse length&amp;quot; period. It spans a maximum of 2ms. This leaves
+&lt;p&gt;Of these three distinct periods the only one that can be constantly busy generating servo pulses is the yellow “Variable pulse length” period. It spans a maximum of 2ms. This leaves
 3ms for activities such as calculating the pulses, determining when each pulse should end and handle communication.&lt;/p&gt;
 
 &lt;p&gt;Knowing when we have processing time available allows us to create a global sequence of events.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Start pulses for the group (set pins to high)&lt;/li&gt;
-&lt;li&gt;Handle communication&lt;/li&gt;
-&lt;li&gt;End pulses fors the group (set pins to low)&lt;/li&gt;
-&lt;li&gt;Handle communication&lt;/li&gt;
-&lt;li&gt;Calculate Ending times for next cycles pulses&lt;/li&gt;
+  &lt;li&gt;Start pulses for the group (set pins to high)&lt;/li&gt;
+  &lt;li&gt;Handle communication&lt;/li&gt;
+  &lt;li&gt;End pulses fors the group (set pins to low)&lt;/li&gt;
+  &lt;li&gt;Handle communication&lt;/li&gt;
+  &lt;li&gt;Calculate Ending times for next cycles pulses&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;This of course is an overly simplified sequence of events. I have not yet figured out how it will look exactly.&lt;/p&gt;
 
-&lt;p&gt;For now I&amp;#39;m reading up on assembly programming and checking out interrupts and timing. That should provide me with enough information to create a sequence in much greater detail.&lt;/p&gt;
+&lt;p&gt;For now I’m reading up on assembly programming and checking out interrupts and timing. That should provide me with enough information to create a sequence in much greater detail.&lt;/p&gt;
 
 &lt;p&gt;As always if you think something in here is wrong please let me know, thanks.&lt;/p&gt;
 </description>
-        <pubDate>Thu, 24 Sep 2015 00:00:00 +0200</pubDate>
-        <link>/servo-controller-part-2-selected-theory/</link>
-        <guid isPermaLink="true">/servo-controller-part-2-selected-theory/</guid>
+        <pubDate>Thu, 24 Sep 2015 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/servo-controller-part-2-selected-theory/</link>
+        <guid isPermaLink="true">http://localhost:4000/servo-controller-part-2-selected-theory/</guid>
       </item>
     
       <item>
@@ -131,12 +169,12 @@ builder.&lt;/p&gt;
 
 &lt;p&gt;The servo controller I intend to build will therefor be working with analog servos since they are more widely available, accepted and cheaper.&lt;/p&gt;
 
-&lt;h1&gt;Control theory&lt;/h1&gt;
+&lt;h1 id=&quot;control-theory&quot;&gt;Control theory&lt;/h1&gt;
 
 &lt;p&gt;The theory behind controlling an analog servo is relatively easy. They respond to a 50hz pwm signal. That means a signal must be repeated every 20ms. The length
 of the pulse within the 20ms determine the position the servo will attempt to reach. If the servo is already at that position it will remain there.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/servo-pwm.png&quot; alt=&quot;Servo pwm diagram&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/servo-pwm.png&quot; alt=&quot;Servo pwm diagram&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Period (P) will occur 50 times in one second. The amplitude in our case will be the voltage level in the MSP430’s I intend to use. Which is 3.3V. The duty cycle
 is the important part in this story since it determines the position of the servo.&lt;/p&gt;
@@ -158,35 +196,35 @@ to admit most of it comes from other sources.&lt;/p&gt;
 
 &lt;p&gt;The people over at &lt;a href=&quot;https://www.pololu.com/&quot;&gt;Pololu&lt;/a&gt; wrote an excellent series of blog posts about servo control. starting with
 &lt;a href=&quot;https://www.pololu.com/blog/15/servo-servo-motor-servomotor-definitely-not-server&quot;&gt;Servo, servo motor, servomotor (definitely not server)&lt;/a&gt;.
-Another Important source is &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l&amp;#39;Hexapod&lt;/a&gt;. A blog by Len Holgate on his own endeavor to create a hexapod robot.&lt;/p&gt;
+Another Important source is &lt;a href=&quot;http://www.lhexapod.com/blog/&quot;&gt;l’Hexapod&lt;/a&gt;. A blog by Len Holgate on his own endeavor to create a hexapod robot.&lt;/p&gt;
 
 &lt;p&gt;Both sources are several years old 2011 and 2010 respectively but still valid today. Both seem to have chosen a different way of accomplishing
 the control of multiple servos with a single micro controller.&lt;/p&gt;
 
 &lt;p&gt;I was some time ago that I read the Pololu series. I will read their solution again and determine what my solution will be. That is for a next post.&lt;/p&gt;
 </description>
-        <pubDate>Sat, 29 Aug 2015 00:00:00 +0200</pubDate>
-        <link>/servo-control-part-1/</link>
-        <guid isPermaLink="true">/servo-control-part-1/</guid>
+        <pubDate>Sat, 29 Aug 2015 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/servo-control-part-1/</link>
+        <guid isPermaLink="true">http://localhost:4000/servo-control-part-1/</guid>
       </item>
     
       <item>
         <title>Terrible blogger</title>
         <description>&lt;p&gt;Several times before I started a blog and in each of those instances I stopped
 after only a few posts. Whenever my interests changed or I got too busy in my
-personal live. &lt;/p&gt;
+personal live.&lt;/p&gt;
 
 &lt;p&gt;This time I hope to break that cycle. Partly by doing things differently. Not
 using an elaborate blogging tool like Wordpress. Instead something much simpler
 and for some much harder. By using Jekyll and Github.&lt;/p&gt;
 
 &lt;p&gt;I have used Github before but Jekyll is a first. So lets see how long I keep it
-up this time. Also I&amp;#39;m not limiting myself as to what I post on here so who
+up this time. Also I’m not limiting myself as to what I post on here so who
 knows what you might find.&lt;/p&gt;
 </description>
-        <pubDate>Thu, 13 Aug 2015 00:00:00 +0200</pubDate>
-        <link>/terrible-blogger/</link>
-        <guid isPermaLink="true">/terrible-blogger/</guid>
+        <pubDate>Thu, 13 Aug 2015 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/terrible-blogger/</link>
+        <guid isPermaLink="true">http://localhost:4000/terrible-blogger/</guid>
       </item>
     
   </channel>
